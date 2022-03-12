@@ -28,6 +28,7 @@
     "hammerjs": "^2.0.8",
     "rxjs": "~6.2.0",
     "sass": "^1.49.9",
+    "service": "^0.1.4",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
