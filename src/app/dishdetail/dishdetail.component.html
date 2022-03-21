@@ -8,7 +8,7 @@
 
   <div fxFlex="100">
     <div>
-      <h3>{{dish.name | uppercase}}</h3>
+      <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
       <hr>
     </div>
   </div>
@@ -42,6 +42,10 @@
         <p matLine> <span> -- {{commentline.author}} {{commentline.date | date}} </span></p>          
       </mat-list-item>
     </mat-list>
+  </div>
+
+  <div [hidden]="dish">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
   </div>
 
 </div>
