@@ -20,7 +20,7 @@
           <h3>{{dish.name | uppercase}}</h3>
         </mat-card-title>
       </mat-card-header>
-      <img mat-card-image height="320px" src={{dish.image}} alt={{dish.name}}>
+      <img mat-card-image src={{dish.image}} alt={{dish.name}}>
       <mat-card-content>
         <p>{{dish.description}}
         </p>
@@ -36,8 +36,8 @@
     </mat-card>
   </div>
 
-  <div fxFlex="40">
-    <mat-list fxFlex *ngIf="dish">
+  <div fxFlex="40" *ngIf="dish">
+    <mat-list>
       <h3>COMMENTS</h3>
       <mat-list-item *ngFor="let commentline of dish.comments">
         <h4 matLine> {{commentline.comment}} </h4>
@@ -45,6 +45,34 @@
         <p matLine> <span> -- {{commentline.author}} {{commentline.date | date}} </span></p>          
       </mat-list-item>
     </mat-list>
+
+    <form novalidate [formGroup]="commentForm" #fform="ngForm" (ngSubmit)="onSubmit()">
+      <mat-list>
+        <mat-list-item *ngIf="fform.form.valid">
+          <h4 matLine> {{commentForm.value.comment}} </h4>
+          <p matLine> {{commentForm.value.rating}} star </p>
+          <p matLine> <span> -- {{commentForm.value.author}}</span></p>          
+        </mat-list-item>
+      </mat-list>
+      <p>
+        <mat-form-field class="full-width">
+          <input matInput formControlName="author" placeholder="Name" type="text" required>
+          <mat-error *ngIf="formErrors.author">{{formErrors.author}}</mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-slider formControlName="rating" thumbLabel tickInterval="1" min="1" max="5" step="1" value="5"></mat-slider>
+      </p>
+      <p>
+        <mat-form-field class="full-width">
+          <textarea matInput formControlName="comment" placeholder="Your Comment" rows=12 required></textarea>
+          <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
+        </mat-form-field>
+      </p>
+      <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="fform.form.invalid">Submit</button>
+    </form>
+
+
   </div>
 
   <div [hidden]="dish">
