@@ -38,6 +38,7 @@ import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
+import { HighlightDirective } from './directives/highlight.directive';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { AppComponent } from './app.component';
     AboutComponent,
     HomeComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
