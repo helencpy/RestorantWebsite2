@@ -7,13 +7,17 @@ import { Location } from '@angular/common';
 import { Comment } from '../shared/comment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as internal from 'assert';
-
+import { visibility, expand } from '../animations/app.animation';
 
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  animations: [
+    visibility(),
+    expand()
+  ]
 })
 export class DishdetailComponent implements OnInit {
   @ViewChild('fform') commentFormDirective;
@@ -29,6 +33,7 @@ export class DishdetailComponent implements OnInit {
   dishcopy: Dish;
 
   ratingDefault = 5;
+  visibility = 'shown';
 
   formErrors = {
     'author': '',
@@ -62,10 +67,9 @@ export class DishdetailComponent implements OnInit {
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds,
       errmess => this.errMess = <any>errmess);
 
-    this.route.params
-      .pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
-        errmess => this.errMess = <any>errmess );
+    this.route.params.pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishservice.getDish(+params['id']); }))
+    .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
+      errmess => this.errMess = <any>errmess);
 
     this.createForm();
   }
